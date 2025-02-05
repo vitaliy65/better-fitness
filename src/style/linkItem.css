@@ -1,0 +1,3 @@
+.link-item-class {
+    @apply flex w-fit [&>li]:hover:pl-1 [&>li]:lg:hover:pl-4 [&>span]:hover:opacity-100;
+}

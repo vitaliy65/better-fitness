@@ -1,0 +1,3 @@
+.link-list-class {
+    @apply flex flex-col lg:text-4xl md:text-3xl sm:text-2xl text-xl lg:space-y-2 space-y-0 transition-transform
+}
