@@ -1,71 +1,33 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { CustomButton } from "./buttons/customButton";
-import { CustomOpenMenu } from "./menus/customOpenMenu";
-import { AnimatePresence } from "motion/react";
+import { useDispatch } from "react-redux";
 import "../style/mainHeader.css";
+import { openSideMenu } from "@/app/state/sideMenu/sideMenuSlice";
 
 export const Header = () => {
-  const [isMdScreen, setIsMdScreen] = useState(true);
-  const [openMenu, setOpenMenu] = useState(false);
-
-  const handleOpenMenu = () => {
-    setOpenMenu(!openMenu);
-  };
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMdScreen(window.innerWidth >= 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const dispatch = useDispatch();
 
   return (
-    <>
-      <div className="main-header-settings">
-        <div className="main-header-inner-settings">
-          <span className="font-bold text-xl">Better - fitness</span>
-          <div className="flex justify-between items-center h-full space-x-3">
-            {isMdScreen ? (
-              <>
-                <CustomButton color="bg-blue-500" className="p-3">
-                  Log in
-                </CustomButton>
-                <CustomButton
-                  onClick={handleOpenMenu}
-                  color="bg-blue-500"
-                  className="p-3"
-                >
-                  Menu
-                </CustomButton>
-              </>
-            ) : (
-              <CustomButton
-                onClick={handleOpenMenu}
-                color="bg-blue-500"
-                className="p-3"
-              >
-                Menu
-              </CustomButton>
-            )}
-          </div>
+    <div className="main-header-settings">
+      <div className="main-header-inner-settings">
+        <span className="font-bold text-xl">Better - fitness</span>
+        <div className="flex justify-between items-center h-full space-x-3">
+          <CustomButton color="bg-blue-500" className="p-3 sm:block hidden ">
+            Log in
+          </CustomButton>
+          <CustomButton
+            onClick={() => {
+              dispatch(openSideMenu());
+            }}
+            color="bg-blue-500"
+            className="p-3"
+          >
+            Menu
+          </CustomButton>
         </div>
       </div>
-
-      <AnimatePresence>
-        {openMenu ? (
-          <CustomOpenMenu
-            isMdScreen={isMdScreen}
-            handleClose={() => {
-              setOpenMenu(!openMenu);
-            }}
-          />
-        ) : null}
-      </AnimatePresence>
-    </>
+    </div>
   );
 };

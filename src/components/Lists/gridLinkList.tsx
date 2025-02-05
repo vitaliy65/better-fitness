@@ -1,9 +1,11 @@
+"use client";
+
 import React, { ReactNode } from "react";
 import "../../style/gridLinkList.css";
 
 export const GridLinkList = ({
   children,
-  columns = "grid-cols-2",
+  columns = "sm:grid-cols-2",
   className,
 }: {
   children: ReactNode;
@@ -11,7 +13,7 @@ export const GridLinkList = ({
   className?: string;
 }) => {
   return (
-    <ul className={`grid-link-list-class ${columns} ${className}`}>
+    <ul className={`grid-link-list-class grid-cols-1 ${columns} ${className}`}>
       {children}
     </ul>
   );
