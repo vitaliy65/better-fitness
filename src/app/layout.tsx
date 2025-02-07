@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/header";
 import { CustomOpenMenu } from "../components/menus/customOpenMenu";
 import { Providers } from "./provider";
+import { connectToMongoDB } from "@/lib/mongodb";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +26,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  connectToMongoDB();
   return (
     <html lang="en">
       <body
