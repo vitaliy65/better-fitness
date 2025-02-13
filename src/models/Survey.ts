@@ -1,15 +1,11 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose from "mongoose";
 
-export interface ISurvey extends Document {
-  title: string;
-  description: string;
-}
-
-const SurveySchema: Schema = new Schema({
+const SurveySchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
 });
 
-const Survey = mongoose.model<ISurvey>("Survey", SurveySchema);
+// Check if the model already exists before defining it
+const Survey = mongoose.models.Survey || mongoose.model("Survey", SurveySchema);
 
 export default Survey;

@@ -1,17 +1,8 @@
 import { NextResponse } from "next/server";
 import Question from "@/models/Question";
 
-export async function GET(
-  _request: Request,
-  { params }: { params?: Promise<{ id: string }> } = {}
-) {
+export async function GET() {
   try {
-    if (params) {
-      const id = (await params).id;
-      const question = await Question.findById(id);
-      return NextResponse.json(question, { status: 200 });
-    }
-
     const questions = await Question.find();
     return NextResponse.json(questions, { status: 200 });
   } catch (error) {
@@ -22,11 +13,25 @@ export async function GET(
 export async function POST(request: Request) {
   try {
     const data = await request.json(); // Отримати дані з запиту
-    const newQuestion = new Question(data); // Створити новий екземпляр опитування
-    await newQuestion.save(); // Зберегти нове опитування в базі даних
-    return NextResponse.json(newQuestion, { status: 201 });
+
+    if (Array.isArray(data)) {
+      // Якщо це масив, додаємо всі запитання
+      const questions = await Question.insertMany(data);
+      return NextResponse.json(questions, { status: 201 });
+    } else {
+      // Якщо це один об'єкт, додаємо як окреме запитання
+      const newQuestion = new Question(data);
+      await newQuestion.save();
+      return NextResponse.json(newQuestion, { status: 201 });
+    }
   } catch (error) {
-    return NextResponse.json({ error: { error } }, { status: 500 });
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json(
+      { error: "An unknown error occurred" },
+      { status: 500 }
+    );
   }
 }
 

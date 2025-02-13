@@ -1,20 +1,25 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-export interface IQuestion extends Document {
-  survey: Schema.Types.ObjectId;
-  part: number;
-  content: string;
-}
-
-const QuestionSchema: Schema = new Schema({
+const QuestionSchema = new Schema({
   survey: {
     type: Schema.Types.ObjectId,
     ref: "Survey",
   },
-  part: { type: Number, required: true },
-  content: { type: String, required: true },
+  questionTitle: {
+    type: String,
+    required: true,
+  },
+  answers: [
+    {
+      answer: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 
-const Question = mongoose.model<IQuestion>("Question", QuestionSchema);
+const Question =
+  mongoose.models.Question || mongoose.model("Question", QuestionSchema);
 
 export default Question;

@@ -22,7 +22,7 @@ export const CustomOpenMenu = ({ className }: { className?: string }) => {
       {openMenu ? (
         <div className="fixed z-30 flex justify-end w-screen h-screen overflow-x-hidden">
           <motion.div
-            className={`custom-open-menu-class ${className}`}
+            className={`custom-open-menu-class ${className ? className : ""}`}
             initial={{ translateX: window.innerWidth }}
             animate={{ translateX: 0 }}
             exit={{ translateX: window.innerWidth }}
