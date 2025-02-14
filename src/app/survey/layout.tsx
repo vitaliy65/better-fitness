@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Header } from "@/components/header";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -11,5 +12,10 @@ export default function SurveyLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className={`antialiased w-screen h-fit text-xl`}>{children}</div>;
+  return (
+    <>
+      <Header />
+      <div className={`antialiased w-screen h-fit text-xl`}>{children}</div>
+    </>
+  );
 }

@@ -21,9 +21,19 @@ export async function GET(
 
 export async function POST(request: Request) {
   try {
-    const data = await request.json(); // Отримати дані з запиту
-    const newUser = new User(data); // Створити новий екземпляр опитування
-    await newUser.save(); // Зберегти нове опитування в базі даних
+    const data = await request.json();
+
+    // Перевірка на існуючого користувача за email
+    const existingUser = await User.findOne({ Email: data.Email });
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "Користувач з таким email вже існує" },
+        { status: 409 }
+      );
+    }
+
+    const newUser = new User(data);
+    await newUser.save();
     return NextResponse.json(newUser, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: { error } }, { status: 500 });

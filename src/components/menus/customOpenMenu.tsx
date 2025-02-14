@@ -32,9 +32,11 @@ export const CustomOpenMenu = ({ className }: { className?: string }) => {
               <Link href={"/"} className="w-fit text-xl">
                 Need help?
               </Link>
-              <CustomButton color="bg-blue-500" className="p-3 text-white">
-                Log in
-              </CustomButton>
+              <Link href={"/login"}>
+                <CustomButton color="bg-blue-500" className="p-3 text-white">
+                  Log in
+                </CustomButton>
+              </Link>
               <CustomButton
                 onClick={() => {
                   dispatch(closeSideMenu());

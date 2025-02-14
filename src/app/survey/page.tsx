@@ -9,6 +9,7 @@ import emailjs from "@emailjs/browser";
 import "react-toastify/dist/ReactToastify.css"; // Added for styles
 
 import "@/style/survey.css";
+import "@/style/custom-jsx.css";
 
 interface Question {
   _id: string;
@@ -76,7 +77,7 @@ export default function Survey() {
         toast.success("Message sent successfully!");
         setEmail("");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to send message. Please try again later.");
     }
   };

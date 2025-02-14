@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Header } from "@/components/header";
-import { CustomOpenMenu } from "../components/menus/customOpenMenu";
 import { Providers } from "./provider";
 import { connectToMongoDB } from "@/lib/mongodb";
 
@@ -20,11 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased  w-full text-xl`}>
-        <Providers>
-          <Header />
-          {children}
-          <CustomOpenMenu />
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

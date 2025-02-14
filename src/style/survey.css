@@ -9,11 +9,3 @@
 .my-container{
     @apply absolute flex justify-center items-center flex-col w-full h-full px-4 pt-20 py-4
 }
-
-.input-custom{
-    @apply w-80 px-4 py-2 mt-6 text-base text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out hover:border-blue-400
-}
-
-.button-custom{
-    @apply w-80 px-4 py-2 mt-6 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
-}
