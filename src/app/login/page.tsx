@@ -5,18 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import "@/style/custom-jsx.css";
 import axios from "axios";
-import bcrypt from "bcryptjs";
 import { toast, ToastContainer } from "react-toastify";
-import User from "@/models/User";
 import { useRouter } from "next/navigation";
-
-interface User {
-  Email: string;
-  Password: string;
-}
 
 export default function Login() {
   const router = useRouter();
+
   const [formData, setFormData] = React.useState({
     email: "",
     password: "",
@@ -26,36 +20,13 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.get("http://localhost:3000/api/user");
-      const users = response.data;
+      const res = await axios.post("http://localhost:3000/api/auth", formData);
+      localStorage.setItem("user", JSON.stringify(res.data));
 
-      // Шукаємо користувача за email
-      const user = users.find((user: User) => user.Email === formData.email);
-
-      if (!user) {
-        toast.error("Користувача з таким email не знайдено");
-        return;
-      }
-
-      // Перевіряємо пароль
-      const isPasswordValid = await bcrypt.compare(
-        formData.password,
-        user.Password
-      );
-
-      if (!isPasswordValid) {
-        toast.error("Невірний пароль");
-        return;
-      }
-
-      // Якщо все добре
       toast.success("Успішний вхід!");
-      localStorage.setItem("User", JSON.stringify(formData));
       router.push("/");
-      // Тут можна додати редирект або інші дії після успішного входу
-    } catch (error) {
+    } catch {
       toast.error("Помилка при вході");
-      console.error(error);
     }
   };
 

@@ -1,15 +1,35 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CustomButton } from "./buttons/customButton";
 import { useDispatch } from "react-redux";
-import "../style/mainHeader.css";
+import "@/style/mainHeader.css";
 import { openSideMenu } from "@/app/state/sideMenu/sideMenuSlice";
-import { CustomOpenMenu } from "@/components/menus/customOpenMenu";
 import Link from "next/link";
+import { CustomOpenMenu } from "./menus/customOpenMenu";
+import axios from "axios";
 
 export const Header = () => {
   const dispatch = useDispatch();
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const userInfo = JSON.parse(localStorage.getItem("user") || "");
+      if (userInfo) {
+        await axios
+          .post("http://localhost:3000/api/auth/me", { token: userInfo.token })
+          .then((res) => {
+            setIsAuthorized(res.data.valid);
+          })
+          .catch(() => {
+            setIsAuthorized(false);
+          });
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
 
   return (
     <>
@@ -19,14 +39,26 @@ export const Header = () => {
             Better - fitness
           </Link>
           <div className="flex justify-between items-center h-full space-x-3">
-            <Link href={"/login"}>
-              <CustomButton
-                color="bg-blue-500"
-                className="p-3 sm:block hidden "
-              >
-                Log in
-              </CustomButton>
-            </Link>
+            {isAuthorized ? (
+              <Link href={"/profile"}>
+                <CustomButton
+                  color="bg-blue-500"
+                  className="p-3 sm:block hidden"
+                >
+                  Profile
+                </CustomButton>
+              </Link>
+            ) : (
+              <Link href={"/login"}>
+                <CustomButton
+                  color="bg-blue-500"
+                  className="p-3 sm:block hidden"
+                >
+                  Log in
+                </CustomButton>
+              </Link>
+            )}
+
             <CustomButton
               onClick={() => {
                 dispatch(openSideMenu());

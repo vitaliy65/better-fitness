@@ -4,7 +4,6 @@ import React from "react";
 import Image from "next/image";
 import "@/style/custom-jsx.css";
 import axios from "axios";
-import bcrypt from "bcryptjs";
 import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 
@@ -21,11 +20,7 @@ export default function Register() {
     setIsLoading(true);
 
     try {
-      const hashedPassword = await bcrypt.hash(formData.password, 10);
-      const res = await axios.post("http://localhost:3000/api/user", {
-        Email: formData.email,
-        Password: hashedPassword,
-      });
+      const res = await axios.post("http://localhost:3000/api/user", formData);
 
       if (res.status === 201) {
         toast.success("Дякуємо що повернулися!");

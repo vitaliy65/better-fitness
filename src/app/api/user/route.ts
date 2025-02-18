@@ -1,17 +1,8 @@
 import { NextResponse } from "next/server";
 import User from "@/models/User";
 
-export async function GET(
-  _request: Request,
-  { params }: { params?: Promise<{ id: string }> } = {}
-) {
+export async function GET() {
   try {
-    if (params) {
-      const id = (await params).id;
-      const user = await User.findById(id);
-      return NextResponse.json(user, { status: 200 });
-    }
-
     const users = await User.find();
     return NextResponse.json(users, { status: 200 });
   } catch (error) {
