@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export async function POST(req: Request) {
   const data = await req.json();
 
-  const user = await User.findOne({ Email: data.email });
+  const user = await User.findOne({ email: data.email });
   if (!user || !(await user.matchPassword(data.password))) {
     return NextResponse.json(
       {
@@ -21,14 +21,23 @@ export async function POST(req: Request) {
     throw new Error("JWT_SECRET is not defined");
   }
 
-  const token = jwt.sign({ id: user._id }, jwtSecret, {
-    expiresIn: "1h",
-  });
+  const token = jwt.sign(
+    { id: user._id, name: user.name, age: user.age, email: user.email },
+    jwtSecret,
+    {
+      expiresIn: "1h",
+    }
+  );
 
   return NextResponse.json(
     {
       token,
-      user: { id: user._id, name: user.Name, email: user.Email },
+      user: {
+        id: user._id,
+        name: user.name,
+        age: user.age,
+        email: user.email,
+      },
     },
     { status: 201 }
   );

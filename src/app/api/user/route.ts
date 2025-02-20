@@ -43,3 +43,27 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: { error } }, { status: 500 });
   }
 }
+
+export async function PATCH(request: Request) {
+  try {
+    const data = await request.json();
+    const { id, ...updateData } = data;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { $set: updateData },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return NextResponse.json(
+        { error: "Користувача не знайдено" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(updatedUser, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: { error } }, { status: 500 });
+  }
+}

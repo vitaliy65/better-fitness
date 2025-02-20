@@ -1,4 +1,7 @@
+"use client";
+
 import React, { useState } from "react";
+import "@/style/custom-jsx.css";
 
 interface EditableFieldProps {
   label: string;
