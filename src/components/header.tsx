@@ -8,7 +8,7 @@ import { openSideMenu } from "@/app/state/sideMenu/sideMenuSlice";
 import Link from "next/link";
 import { CustomOpenMenu } from "./menus/customOpenMenu";
 import axios from "axios";
-import { APP_URL } from "@/app/constants";
+import { APP_URL } from "@/utils/constants";
 
 export const Header = () => {
   const dispatch = useDispatch();

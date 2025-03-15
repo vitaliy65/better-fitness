@@ -7,7 +7,7 @@ import "@/style/custom-jsx.css";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { APP_URL } from "@/app/constants";
+import { APP_URL } from "@/utils/constants";
 
 export default function Login() {
   const router = useRouter();

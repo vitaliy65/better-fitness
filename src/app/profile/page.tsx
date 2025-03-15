@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import EditableField from "@/components/editableField";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-import { APP_URL } from "@/app/constants";
+import { APP_URL } from "@/utils/constants";
 
 export default function Profile() {
   const [user, setUser] = useState({ id: "", age: "", name: "", email: "" });

@@ -6,7 +6,7 @@ import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify"; // For notifications
 import emailjs from "@emailjs/browser";
-import { APP_URL } from "@/app/constants";
+import { APP_URL } from "@/utils/constants";
 
 import "react-toastify/dist/ReactToastify.css"; // Added for styles
 import "@/style/survey.css";
