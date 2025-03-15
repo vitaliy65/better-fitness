@@ -20,7 +20,8 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:3000/api/auth", formData);
+      const url = process.env.NEXT_PUBLIC_APP_URL;
+      const res = await axios.post(`${url}/api/auth`, formData);
       localStorage.setItem("user", JSON.stringify(res.data));
 
       toast.success("Успішний вхід!");

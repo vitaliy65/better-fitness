@@ -17,8 +17,9 @@ export const Header = () => {
     const fetchUserInfo = async () => {
       const userInfo = JSON.parse(localStorage.getItem("user") || "");
       if (userInfo) {
+        const url = process.env.NEXT_PUBLIC_APP_URL;
         await axios
-          .post("http://localhost:3000/api/auth/me", { token: userInfo.token })
+          .post(`${url}/api/auth/me`, { token: userInfo.token })
           .then((res) => {
             setIsAuthorized(res.data.valid);
           })

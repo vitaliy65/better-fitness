@@ -22,7 +22,8 @@ export default function Profile() {
 
   const saveAttribute = async (attribute: string, value: string | number) => {
     try {
-      const response = await axios.patch("http://localhost:3000/api/user", {
+      const url = process.env.NEXT_PUBLIC_APP_URL;
+      const response = await axios.patch(`${url}/api/user`, {
         id: user.id,
         [attribute.toLowerCase()]: value,
       });

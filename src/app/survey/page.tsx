@@ -28,8 +28,9 @@ export default function Survey() {
 
   useEffect(() => {
     const fetchQuestions = async () => {
+      const url = process.env.NEXT_PUBLIC_APP_URL;
       await axios
-        .get("http://localhost:3000/api/question")
+        .get(`${url}/api/question`)
         .then((res) => {
           setQuestions(res.data);
           console.log(res.data);

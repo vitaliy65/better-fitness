@@ -20,7 +20,8 @@ export default function Register() {
     setIsLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3000/api/user", formData);
+      const url = process.env.NEXT_PUBLIC_APP_URL;
+      const res = await axios.post(`${url}/api/user`, formData);
 
       if (res.status === 201) {
         toast.success("Дякуємо що повернулися!");
