@@ -6,8 +6,9 @@ import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify"; // For notifications
 import emailjs from "@emailjs/browser";
-import "react-toastify/dist/ReactToastify.css"; // Added for styles
+import { APP_URL } from "@/app/constants";
 
+import "react-toastify/dist/ReactToastify.css"; // Added for styles
 import "@/style/survey.css";
 import "@/style/custom-jsx.css";
 
@@ -28,9 +29,8 @@ export default function Survey() {
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      const url = process.env.NEXT_PUBLIC_APP_URL;
       await axios
-        .get(`${url}/api/question`)
+        .get(`${APP_URL}/api/question`)
         .then((res) => {
           setQuestions(res.data);
           console.log(res.data);

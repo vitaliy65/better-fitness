@@ -8,6 +8,7 @@ import { openSideMenu } from "@/app/state/sideMenu/sideMenuSlice";
 import Link from "next/link";
 import { CustomOpenMenu } from "./menus/customOpenMenu";
 import axios from "axios";
+import { APP_URL } from "@/app/constants";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -17,9 +18,8 @@ export const Header = () => {
     const fetchUserInfo = async () => {
       const userInfo = JSON.parse(localStorage.getItem("user") || "");
       if (userInfo) {
-        const url = process.env.NEXT_PUBLIC_APP_URL;
         await axios
-          .post(`${url}/api/auth/me`, { token: userInfo.token })
+          .post(`${APP_URL}/api/auth/me`, { token: userInfo.token })
           .then((res) => {
             setIsAuthorized(res.data.valid);
           })

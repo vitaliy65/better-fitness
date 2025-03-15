@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import EditableField from "@/components/editableField";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { APP_URL } from "@/app/constants";
 
 export default function Profile() {
   const [user, setUser] = useState({ id: "", age: "", name: "", email: "" });
@@ -22,8 +23,7 @@ export default function Profile() {
 
   const saveAttribute = async (attribute: string, value: string | number) => {
     try {
-      const url = process.env.NEXT_PUBLIC_APP_URL;
-      const response = await axios.patch(`${url}/api/user`, {
+      const response = await axios.patch(`${APP_URL}/api/user`, {
         id: user.id,
         [attribute.toLowerCase()]: value,
       });

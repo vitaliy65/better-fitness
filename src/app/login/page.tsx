@@ -7,6 +7,7 @@ import "@/style/custom-jsx.css";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { APP_URL } from "@/app/constants";
 
 export default function Login() {
   const router = useRouter();
@@ -20,8 +21,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const url = process.env.NEXT_PUBLIC_APP_URL;
-      const res = await axios.post(`${url}/api/auth`, formData);
+      const res = await axios.post(`${APP_URL}/api/auth`, formData);
       localStorage.setItem("user", JSON.stringify(res.data));
 
       toast.success("Успішний вхід!");
