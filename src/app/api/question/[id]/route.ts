@@ -1,16 +1,16 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import Question from "@/models/Question";
 
 export async function GET(
-  _request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  if (!params || !params.id) {
+  if (!params) {
     return NextResponse.json({ error: "No ID provided" }, { status: 400 });
   }
 
   try {
-    const { id } = params;
+    const { id } = await params;
     const question = await Question.findById(id);
     if (!question) {
       return NextResponse.json(

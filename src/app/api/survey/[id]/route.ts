@@ -3,14 +3,14 @@ import Survey from "@/models/Survey";
 
 export async function GET(
   _request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  if (!params || !params.id) {
+  if (!params) {
     return NextResponse.json({ error: "No ID provided" }, { status: 400 });
   }
 
   try {
-    const { id } = params;
+    const { id } = await params;
     const survey = await Survey.findById(id);
     if (!survey) {
       return NextResponse.json(

@@ -3,14 +3,14 @@ import User from "@/models/User";
 
 export async function GET(
   _request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  if (!params || !params.id) {
+  if (!params) {
     return NextResponse.json({ error: "No ID provided" }, { status: 400 });
   }
 
   try {
-    const { id } = params;
+    const { id } = await params;
     const user = await User.findById(id);
     if (!user) {
       return NextResponse.json(
