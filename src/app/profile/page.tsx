@@ -29,10 +29,23 @@ export default function Profile() {
       });
 
       if (response.status === 200) {
-        setUser((prev) => ({
-          ...prev,
+        const newUser = {
+          ...user,
           [attribute.toLowerCase()]: value,
-        }));
+        };
+
+        setUser(newUser);
+
+        // Оновлюємо дані в localStorage
+        const storageData = JSON.parse(localStorage.getItem("user") || "{}");
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            ...storageData,
+            user: newUser,
+          })
+        );
+
         toast.success("Успішно оновлено!");
       }
     } catch {
