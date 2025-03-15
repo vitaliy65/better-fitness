@@ -3,19 +3,26 @@ import Question from "@/models/Question";
 
 export async function GET(
   _request: Request,
-  { params }: { params?: Promise<{ id: string }> } = {}
+  { params }: { params: { id: string } }
 ) {
-  if (!params) {
+  if (!params || !params.id) {
     return NextResponse.json({ error: "No ID provided" }, { status: 400 });
   }
 
   try {
-    const id = (await params).id;
+    const { id } = params;
     const question = await Question.findById(id);
+    if (!question) {
+      return NextResponse.json(
+        { error: "There is no question for this ID" },
+        { status: 404 }
+      );
+    }
     return NextResponse.json(question, { status: 200 });
-  } catch {
+  } catch (error) {
+    console.error("Error fetching question:", error);
     return NextResponse.json(
-      { error: "There is no question for this ID" },
+      { error: "An error occurred while fetching the question" },
       { status: 500 }
     );
   }
