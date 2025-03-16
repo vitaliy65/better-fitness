@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import Question from "@/models/Question";
+import { connectToMongoDB } from "@/lib/mongodb";
 
 export async function GET() {
+  await connectToMongoDB();
   try {
     const questions = await Question.find();
     return NextResponse.json(questions, { status: 200 });
@@ -11,6 +13,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  await connectToMongoDB();
   try {
     const data = await request.json(); // Отримати дані з запиту
 
@@ -36,6 +39,7 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  await connectToMongoDB();
   try {
     const { id } = await request.json(); // Отримати ID з запиту
     await Question.findByIdAndDelete(id); // Видалити опитування за ID

@@ -1,29 +1,30 @@
+import { Console } from "console";
 import mongoose from "mongoose";
 
-let isConnected = false; // Track the connection status
+let isConnected = false;
 
-export async function connectToMongoDB() {
+export const connectToMongoDB = async () => {
+  console.log("Connecting to mongoDB...");
+
   if (isConnected) {
-    console.log("Already connected to MongoDB");
+    console.log("Already connected to mongoDB");
     return;
   }
 
-  if (!process.env.MONGODB_URI) {
-    throw new Error("Invalid/Missing environment variable: 'MONGODB_URI'");
+  const MONGODB_URI = process.env.MONGODB_URI;
+
+  if (!MONGODB_URI) {
+    throw new Error(
+      "MONGODB_URI is not defined in .env.local file or environment variables"
+    );
   }
 
-  // DB Config
-  const db = process.env.MONGODB_URI;
-
-  // Connect to MongoDB
-  await mongoose
-    .connect(db)
-    .then(() => {
-      isConnected = true;
-      console.log("MongoDB Connected");
-    })
-    .catch((err) => {
-      console.error("MongoDB connection error:", err);
-      throw new Error("Failed to connect to MongoDB");
-    });
-}
+  try {
+    await mongoose.connect(MONGODB_URI);
+    isConnected = true;
+    console.log("Connected to mongoDB");
+  } catch (error) {
+    console.error("Failed to connect to mongoDB", error);
+    throw error;
+  }
+};

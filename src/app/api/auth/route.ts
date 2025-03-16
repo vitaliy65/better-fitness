@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import User from "@/models/User";
 import jwt from "jsonwebtoken";
+import { connectToMongoDB } from "@/lib/mongodb";
 
 export async function POST(req: Request) {
+  await connectToMongoDB();
   const data = await req.json();
 
   const user = await User.findOne({ email: data.email });

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { connectToMongoDB } from "@/lib/mongodb";
 
 export async function POST(req: NextRequest) {
+  await connectToMongoDB();
   const data = await req.json();
   const secret = process.env.JWT_SECRET;
 

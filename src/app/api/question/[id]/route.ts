@@ -1,10 +1,12 @@
 import { NextResponse, NextRequest } from "next/server";
 import Question from "@/models/Question";
+import { connectToMongoDB } from "@/lib/mongodb";
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  await connectToMongoDB();
   if (!params) {
     return NextResponse.json({ error: "No ID provided" }, { status: 400 });
   }

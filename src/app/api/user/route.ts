@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import User from "@/models/User";
+import { connectToMongoDB } from "@/lib/mongodb";
 
 // Constants for status codes and error messages
 const STATUS_CODES = {
@@ -37,6 +38,7 @@ function handleError(error: Error | unknown) {
 }
 
 export async function GET() {
+  await connectToMongoDB();
   try {
     const users = await User.find();
     return createResponse(users, STATUS_CODES.OK);
@@ -46,6 +48,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  await connectToMongoDB();
   try {
     const data = await request.json();
 
@@ -75,6 +78,7 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  await connectToMongoDB();
   try {
     const { id } = await request.json(); // Отримати ID з запиту
     await User.findByIdAndDelete(id); // Видалити користувача за ID
@@ -88,6 +92,7 @@ export async function DELETE(request: Request) {
 }
 
 export async function PATCH(request: Request) {
+  await connectToMongoDB();
   try {
     const data = await request.json();
     const { id, ...updateData } = data;
